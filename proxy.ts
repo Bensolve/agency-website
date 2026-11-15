@@ -1,12 +1,13 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const SECRET = new TextEncoder().encode(process.env.AUTH_SECRET!);
+const SECRET = new TextEncoder().encode(
+  process.env.AUTH_SECRET ?? "dev-secret-change-me-before-deploy-please-32-bytes"
+);
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Allow the login page through untouched
   if (pathname === "/admin/login") {
     return NextResponse.next();
   }
